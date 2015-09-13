@@ -92,13 +92,15 @@ layout: false
   ## Docker
 ]
 .right-column[
-  Docker is cool, containers.
+  Docker is a way to really use LXC (Linux Containers).
 
-  - advantages
+  *Docker allows you to package an application with all of its dependencies into a standardized unit for software development.*
 
-  - portability
+  - Portability & congruency
 
-  - koolaid
+  - A great way to manage running processes
+
+  - Drink the koolaid.
 
 ```bash
 FROM fedora:latest
@@ -109,7 +111,8 @@ RUN yum install -y cowsay
 So you could serve a file:
 
 ```bash
-docker run -it dougbtv/cowsay /usr/bin/cowsay "Vermont Is Awesome"
+docker run -it dougbtv/cowsay \
+/usr/bin/cowsay "Vermont Is Awesome"
 # ____________________ 
 #< Vermont is awesome >
 # -------------------- 
@@ -127,13 +130,15 @@ layout: false
   ## CoreOS
 ]
 .right-column[
-  CoreOS is awesome, run your containers.
-
-  - Fork of ChromeOS
+  CoreOS is a light-weight OS to run your containers on.
 
   - Just a couple hundred megs.
 
-  - Your containers run your Linux flavor that you're used to.
+  - Fork of ChromeOS
+
+  - Bootstrapped with simple tools to manage and maintain a cluster.
+
+  - Your containers run the Linux flavor that you're used to.
 
   - Run it where you want: In the closet, in a public/private cloud.
 ]
@@ -147,9 +152,11 @@ layout: false
 .right-column[
   etcd is a discovery service.
 
-  - A distributed key-value pair database with a REST API
+  - Distributed key-value pair database 
 
-  - Used by CoreOS itself for `fleet` a way to manage your "fleet" of CoreOS machines and the services that run on them.
+  - Accessed via REST API
+
+  - Used by CoreOS for `fleet`
 
   - A way to dynamically store configurations, like the simplest one: "Hey I'm a service and I live here!"
 ]
@@ -164,9 +171,13 @@ layout: false
 
 .right-column[
 - Like `systemctl` at a cluster level
+
 - Controlled at the command line
+
 - Rather low level
+
 - Runs Docker containers in systemd-style units
+
 - Allows you to create dependencies
 
 ### Other choices in this realm 
@@ -192,10 +203,14 @@ layout: false
   You probably know Kamailio!
 
   - As we know, Asterisk is a B2BUA not a proxy.
+
   - We'll use it for load balancing our cluster of Asterisk machines.
+
   - Use it in concert with `keepalived` which will provide us with a VIP for an HA load balancer
     - If you use AWS you probably want to use [Elastic IPs and an API](https://aws.amazon.com/articles/2127188135977316)
+
   - We use a custom application `kamailio-etcd-dispatcher` which rebuilds nodes
+
   - We can make a "canary release" easily by automatically rebalancing our cluster using `kamailio-etcd-dispatcher`
 
 ]
@@ -232,6 +247,7 @@ layout: false
 
 ]
 ---
+layout: false
 .left-column[
   ## Docker
   ## CoreOS
@@ -270,6 +286,182 @@ name: inverse
 layout: true
 class: center, middle, inverse
 ---
+# Getting CoreOS & Fleet running
+---
+layout: false
+.left-column[
+  ## Cloud-init
+]
+.right-column[
+
+- The *defacto* package to handle early initialization of cloud instances
+  - Not just specific to CoreOS
+
+- We use the `#cloud-config` flavor
+
+- It's just YAML
+
+- Set your SSH keys
+
+- Define some networking properties.
+
+- Define properties for services.
+
+]
+???
+
+This might be familiar if you're already using OpenStack or AWS or Digital Ocean, etc.
+
+Start up things like etcd, flanneld, docker.
+
+---
+layout: false
+.left-column[
+  ## Cloud-init
+  ## etcd
+]
+.right-column[
+
+- Use a discovery service, `discovery.etcd.io`
+  - Generate a key, every box uses the same key
+  - The key is set in the `cloud-config`
+  - ...You can use a private discovery service, too.
+
+- This will probably be the hardest part.
+
+- If you use ASTDB, you already know how to use a key-value store.
+
+- Give it a whirl.
+
+```bash
+$ etcdctl set /foo/bar "Quux"
+
+$ etcdctl set /foo/bar "Hello world" --ttl 60
+
+$ etcdctl get /foo/bar
+Hello world
+```
+
+]
+???
+
+The discovery service.
+
+Public discovery service isn't so bad, all it's going to store are a few private IPs.
+
+---
+layout: false
+.left-column[
+  ## Cloud-init
+  ## etcd
+  ## Fleet units
+]
+.right-column[
+
+- [Get familiar with systemd](https://coreos.com/docs/launching-containers/launching/getting-started-with-systemd/)
+
+- They're really just systemd units with an `[X-Fleet]` section.
+
+- Define service to run & it's dependancies and conflicts.
+
+- Can use meta-data from `cloud-config`
+
+```bash
+[Unit]
+Description=Cowsay
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill cowsay
+ExecStartPre=-/usr/bin/docker rm cowsay
+ExecStartPre=/usr/bin/docker pull dougbtv/cowsay:latest
+ExecStart=/usr/bin/docker run \
+    --name cowsay \
+    -t dougbtv/cowsay \
+    cowsay 'Buy Maple Syrup'
+ExecStop=/usr/bin/docker stop cowsay
+
+[X-Fleet]
+Conflicts=cowsay@*.service
+MachineMetadata=boxrole=cowsay
+```
+
+]
+???
+## Philosophy
+
+The idea is to run a docker container in the foreground, and let's output go to stdout / stderr, which great for...
+
+## Journald
+
+Journal d is great
+ 
+## Meta data
+
+You might specify different metadata here to specify hardware configurations, like a database might have different hardware requirements than X.
+
+In this example we use it to logically group together services, so for example we say "these boxes are for kamailio" and "these other boxes are for"
+
+---
+layout: false
+.left-column[
+  ## Cloud-init
+  ## etcd
+  ## Fleet units
+  ## Fleet instances
+]
+.right-column[
+
+- Starting an instance of Asterisk
+```bash
+$ fleetctl start asterisk@1
+$ fleetctl start asterisk@2
+[...]
+$ fleetctl start asterisk@100
+```
+
+- Showing our running instances
+```bash
+$ fleetctl list-units
+```
+
+]
+???
+ 
+# notes
+
+---
+layout: false
+.left-column[
+  ## Cloud-init
+  ## etcd
+  ## Fleet units
+  ## Fleet instances
+  ## Fleet features
+]
+.right-column[
+
+- Getting logs for anything in the cluster
+```bash
+$ fleetctl journal asterisk@15
+```
+
+- SSH to any box
+```bash
+$ fleetctl ssh asterisk@15
+```
+]
+???
+ 
+# notes
+
+---
+name: inverse
+layout: true
+class: center, middle, inverse
+---
 # System Architecture
 ---
 layout:false
@@ -277,6 +469,12 @@ background-image: url(/images/platform_stack.png)
 ---
 layout:false
 background-image: url(/images/network.png)
+---
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Asterisk + Kamailio + Discovery Service
 ---
 name: inverse
 layout: true
