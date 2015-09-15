@@ -10,19 +10,16 @@ layout: false
   ## Who am I?
 ]
 .right-column[
-  I'm Doug and this is a stub. 
+
+### I'm Doug and this is a STUB. 
 
 - Develop Asterisk solutions every day.
 
-- A founding member of Burlington, Vermont's hackerspace [LaboratoryB.org](http://laboratoryb.org)
+- Member of Burlington, Vermont's hackerspace [LaboratoryB.org](http://laboratoryb.org)
 
-- Love full-stack Javascript
+- Dig devops, fullstack JavaScript, and lots of open source
 
-- Open soooource.
-
-- Live in Vermont.
-
-- Into trout fishing, backcountry skiing, ... 
+- Live in Vermont, yadda yadda yadda
 
 ]
 ---
@@ -33,11 +30,14 @@ layout: false
 .right-column[
   800response is a company, stub.
 
-- Telephony, cool stuff, technology.
+- Speech Analytics
 
-- We like customers.
+- VoIP / Telephony
 
-- VoIP
+- Open source technologies
+
+- This is a stub...
+
 ]
 ---
 name: inverse
@@ -51,13 +51,14 @@ layout: false
   ## This is documented online
 ]
 .right-column[
-  #You can find this online @ [url.stub.com](url.stub.com)
+  # You can find this online @ [url.stub.com](url.stub.com)
+
+  - DIY Workshop on Github
 
   - Whole presentation is in markdown.
 
-  - Github
-
   - Twitter [@dougbtv](https://twitter.com/dougbtv)
+
 ]
 ---
 layout: false
@@ -81,6 +82,41 @@ layout: false
   * For OS: [Project Atomic](http://www.projectatomic.io/download/), a Fedora for running containers, and uses Kubernetes for management.
 ]
 ---
+layout: false
+.left-column[
+  ## This is documented online
+  ## Why Docker & CoreOS
+  ## First class considerations
+]
+.right-column[
+
+* High Availability
+
+* Scalability
+
+* Visibility
+
+]
+---
+layout: false
+.left-column[
+  ## This is documented online
+  ## Why Docker & CoreOS
+  ## First class considerations
+  ## Overview
+]
+.right-column[
+
+* Technology intro / review
+
+* Getting CoreOS running
+
+* Sample system architecture
+
+* Kamailio etcd dispatcher
+
+]
+---
 name: inverse
 layout: true
 class: center, middle, inverse
@@ -92,13 +128,14 @@ layout: false
   ## Docker
 ]
 .right-column[
-  Docker is cool, containers.
 
-  - advantages
+  *Docker allows you to package an application with all of its dependencies into a standardized unit for software development.*
 
-  - portability
+  - Portability & congruency
 
-  - koolaid
+  - A great way to manage running processes
+
+  - Rather convenient for developers
 
 ```bash
 FROM fedora:latest
@@ -109,7 +146,8 @@ RUN yum install -y cowsay
 So you could serve a file:
 
 ```bash
-docker run -it dougbtv/cowsay /usr/bin/cowsay "Vermont Is Awesome"
+docker run -it dougbtv/cowsay \
+/usr/bin/cowsay -s "Vermont Is Awesome"
 # ____________________ 
 #< Vermont is awesome >
 # -------------------- 
@@ -120,6 +158,9 @@ docker run -it dougbtv/cowsay /usr/bin/cowsay "Vermont Is Awesome"
 #                ||     ||
 ```
 ]
+???
+
+Docker is a way to really use LXC (Linux Containers).
 ---
 layout: false
 .left-column[
@@ -127,13 +168,15 @@ layout: false
   ## CoreOS
 ]
 .right-column[
-  CoreOS is awesome, run your containers.
-
-  - Fork of ChromeOS
+  CoreOS is a light-weight OS to run your containers on.
 
   - Just a couple hundred megs.
 
-  - Your containers run your Linux flavor that you're used to.
+  - Fork of ChromeOS
+
+  - Bootstrapped with simple tools to manage and maintain a cluster.
+
+  - Your containers run the Linux flavor that you're used to.
 
   - Run it where you want: In the closet, in a public/private cloud.
 ]
@@ -145,11 +188,13 @@ layout: false
   ## etcd
 ]
 .right-column[
-  etcd is a discovery service.
+## etcd is a discovery service.
 
-  - A distributed key-value pair database with a REST API
+  - Distributed key-value pair database 
 
-  - Used by CoreOS itself for `fleet` a way to manage your "fleet" of CoreOS machines and the services that run on them.
+  - Accessed via REST API
+
+  - Used by CoreOS for `fleet`
 
   - A way to dynamically store configurations, like the simplest one: "Hey I'm a service and I live here!"
 ]
@@ -163,10 +208,19 @@ layout: false
 ]
 
 .right-column[
-- Like `systemctl` at a cluster level
-- Controlled at the command line
+## Fleet is your scheduler
+
+- An init system at a cluster level
+  - Like `systemctl` across boxes
+
+- Deploy containers on arbitrary hosts
+
+- Maintain *N* instances of a service, and re-schedule 
+
 - Rather low level
+
 - Runs Docker containers in systemd-style units
+
 - Allows you to create dependencies
 
 ### Other choices in this realm 
@@ -192,10 +246,14 @@ layout: false
   You probably know Kamailio!
 
   - As we know, Asterisk is a B2BUA not a proxy.
+
   - We'll use it for load balancing our cluster of Asterisk machines.
+
   - Use it in concert with `keepalived` which will provide us with a VIP for an HA load balancer
     - If you use AWS you probably want to use [Elastic IPs and an API](https://aws.amazon.com/articles/2127188135977316)
-  - We use a custom application `kamailio-etcd-dispatcher` which rebuilds nodes
+
+  - We use a custom application `kamailio-etcd-dispatcher` which dynamically builds instructions for Kamailio's Dispatcher module
+
   - We can make a "canary release" easily by automatically rebalancing our cluster using `kamailio-etcd-dispatcher`
 
 ]
@@ -232,6 +290,7 @@ layout: false
 
 ]
 ---
+layout: false
 .left-column[
   ## Docker
   ## CoreOS
@@ -239,16 +298,17 @@ layout: false
   ## Fleet
   ## Kamailio
   ## Homer
-  ## Not covered
+  ## Supporting tools
 ]
 .right-column[
-  Somethings are just always too painful for a presentation.
 
-  - Dun dun dunnn! NAT.
+- Flannel 
+  - Packaged with CoreOS for network overlay
+  
+- Configuration Management, and you need it.
+  - Ansible, Salt, Puppet, Terraform, etc.
 
-  - Configuration Management, and you need it.
-
-  - Logging (you'll want a centralized log server)
+- Logging (you'll want a centralized log server)
 
 ]
 ???
@@ -270,13 +330,315 @@ name: inverse
 layout: true
 class: center, middle, inverse
 ---
+# Getting CoreOS & Fleet running
+---
+layout: false
+.left-column[
+  ## Cloud-init
+]
+.right-column[
+
+- The *defacto* package to handle early initialization of cloud instances
+  - Not just specific to CoreOS
+
+- We use the `#cloud-config` flavor
+
+- It's just YAML
+
+- Set your SSH keys
+
+- Define some networking properties.
+
+- Define properties for services.
+
+]
+???
+
+This might be familiar if you're already using OpenStack or AWS or Digital Ocean, etc.
+
+Start up things like etcd, flanneld, docker.
+
+---
+layout: false
+.left-column[
+  ## Cloud-init
+  ## etcd
+]
+.right-column[
+
+- Your discovery service uses a discovery service, `discovery.etcd.io`
+  - Generate a key, every box uses the same key
+  - The key is set in the `cloud-config`
+  - ...You can use a private discovery service, too.
+
+- This will probably be the hardest part.
+
+- If you use ASTDB, you already know how to use a key-value store.
+
+- Give it a whirl.
+
+```bash
+$ etcdctl set /foo/bar "Quux"
+
+$ etcdctl set /foo/bar "Hello world" --ttl 60
+
+$ etcdctl get /foo/bar
+Hello world
+```
+
+]
+???
+
+The discovery service.
+
+Public discovery service isn't so bad, all it's going to store are a few private IPs.
+
+---
+layout: false
+.left-column[
+  ## Cloud-init
+  ## etcd
+  ## Fleet units
+]
+.right-column[
+
+- [Get familiar with systemd](https://coreos.com/docs/launching-containers/launching/getting-started-with-systemd/)
+
+- They're really just systemd units with an `[X-Fleet]` section.
+
+- Define service to run & it's dependancies and conflicts.
+
+- Can use meta-data from `cloud-config`
+
+```bash
+[Unit]
+Description=Cowsay
+After=docker.service
+Requires=docker.service
+
+[Service]
+TimeoutStartSec=0
+ExecStartPre=-/usr/bin/docker kill cowsay
+ExecStartPre=-/usr/bin/docker rm cowsay
+ExecStartPre=/usr/bin/docker pull dougbtv/cowsay:latest
+ExecStart=/usr/bin/docker run \
+    --name cowsay \
+    -t dougbtv/cowsay \
+    cowsay 'Buy Maple Syrup'
+ExecStop=/usr/bin/docker stop cowsay
+
+[X-Fleet]
+Conflicts=cowsay@*.service
+MachineMetadata=boxrole=cowsay
+```
+
+]
+???
+## Philosophy
+
+The idea is to run a docker container in the foreground, and let's output go to stdout / stderr, which great for...
+
+## Dependencies & Conflicts
+
+You might not want to run a database container in the same place as a backup container. 
+
+But you will want to run your kamailio on the same box as a keepalived.
+
+## Journald
+
+Journal d is great
+ 
+## Meta data
+
+You might specify different metadata here to specify hardware configurations, like a database might have different hardware requirements than X.
+
+In this example we use it to logically group together services, so for example we say "these boxes are for kamailio" and "these other boxes are for"
+
+---
+layout: false
+.left-column[
+  ## Cloud-init
+  ## etcd
+  ## Fleet units
+  ## Fleet instances
+]
+.right-column[
+
+- Starting an instance of Asterisk
+```bash
+$ fleetctl start asterisk@1
+$ fleetctl start asterisk@2
+[...]
+$ fleetctl start asterisk@100
+```
+
+- Showing our running instances
+```bash
+$ fleetctl list-units
+```
+
+]
+???
+ 
+# notes
+
+---
+layout: false
+.left-column[
+  ## Cloud-init
+  ## etcd
+  ## Fleet units
+  ## Fleet instances
+  ## Fleet features
+]
+.right-column[
+
+- Getting logs for anything in the cluster
+```bash
+$ fleetctl journal asterisk@15
+```
+
+- SSH to any box
+```bash
+$ fleetctl ssh asterisk@15
+```
+]
+???
+ 
+# notes
+
+---
+layout: false
+.left-column[
+  ## Cloud-init
+  ## etcd
+  ## Fleet units
+  ## Fleet instances
+  ## Fleet features
+  ## Tips
+]
+.right-column[
+
+* When in doubt... check the etcd logs
+
+* Think *n+1*
+
+  * An extra machine for utility
+
+  * An extra machine for each class
+
+]
+???
+ 
+# Everything hinges off etcd, luckily it's distributed.
+
+---
+name: inverse
+layout: true
+class: center, middle, inverse
+---
 # System Architecture
+---
+layout: false
+## Ultra-simple business case
+
+* Market research has discovered a pent-up customer demand to hear the sound of screaming monkies.
+
+* User story: Customer dials a phone and hears the sound of monkies.
+
+* We connect to a managed gateway / ITSP, conviently on the same subnet.
+
+## In reality...
+
+* You'll probably have layers of this topology
+
+* Your networking will probably be more complex
+
+???
+
+## conveniences to avoid NAT and other network wigginess
 ---
 layout:false
 background-image: url(/images/platform_stack.png)
 ---
 layout:false
 background-image: url(/images/network.png)
+---
+layout:false
+background-image: url(/images/deploy_scheme.png)
+---
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Asterisk + Kamailio + Discovery Service
+---
+layout: false
+# Kamailio etcd dispatcher
+
+* Adds service discovery for Asterisk to Kamailio
+
+* Written in Node.js
+
+* On [GitHub](https://github.com/dougbtv/kamailio-etcd-dispatcher) and [NPM as kamailio-etcd-dispatcher](https://www.npmjs.com/package/kamailio-etcd-dispatcher)
+
+* Leverages etcd for redundancy
+
+* Runs in two modes
+  * Announcer -- To "announce" where Asterisk boxen are
+  * Dispatcher -- alongside Kamailio to update `dispatcher.list` and run `kamctl`
+
+???
+
+## You don't have to care that it's Node.js
+
+You don't have to care what it's written in, since it's intended to be packaged as a docker image & container, you don't need to worry about babying the stack of technologies. So even if you're not a node.js shop -- it's OK. 
+
+This is one of the powers of containerization, you can let the maintainers of software define how to get it up and running and keep it that way.
+
+
+---
+layout:false
+background-image: url(/images/hkam_01.png)
+---
+layout:false
+background-image: url(/images/hkam_02.png)
+---
+layout:false
+background-image: url(/images/hkam_03.png)
+---
+layout:false
+background-image: url(/images/hkam_04.png)
+---
+layout: false
+## Taking an Asterisk box out of rotation
+
+* Asterisk failure, doesn't respond to SIP `OPTIONS` method
+
+* `core shutdown gracefully` will report congestion to Kamailio
+
+* Stopping the announcer
+
+## Putting 'em back in rotation
+
+* Just start the announcer again
+
+---
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Yo dawg, I heard you like sidekicks...
+---
+layout:false
+background-image: url(/images/hkam_05.png)
+---
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Thank you!
+.footnote[Available online @ [stub.dougbtv.com](http://dougbtv.com)]
 ---
 name: inverse
 layout: true
