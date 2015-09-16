@@ -542,9 +542,9 @@ class: center, middle, inverse
 layout: false
 ## Ultra-simple business case
 
-* Market research has discovered a pent-up customer demand to hear the sound of screaming monkies.
+* Market research has discovered a pent-up customer demand to hear the sound of screaming monkeys.
 
-* User story: Customer dials a phone and hears the sound of monkies.
+* User story: Customer dials a phone and hears the sound of monkeys.
 
 * We connect to a managed gateway / ITSP, conviently on the same subnet.
 
