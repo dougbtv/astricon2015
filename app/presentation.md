@@ -64,9 +64,21 @@ layout: false
 layout: false
 .left-column[
   ## This is documented online
-  ## Why Docker & CoreOS
+  ## Why Docker?
 ]
 .right-column[
+## Docker
+* Component re-use
+* Dependency management
+* Congruency between development & production
+
+### Another choice?
+* [RKT](https://coreos.com/rkt/docs/) ("Rocket") for containers
+
+
+]
+???
+
   Docker & CoreOS are great because they give a few advantages that keep us clean, give us consistent environments, and tools that help with scale. 
 
   * Docker is great for component re-use, sharing & team development, rapid deployment, and simplified maintenance by reducing the risk of problems with application dependencies.
@@ -80,13 +92,37 @@ layout: false
   * For containers: [RKT](https://coreos.com/rkt/docs/) (said, "rocket")
 
   * For OS: [Project Atomic](http://www.projectatomic.io/download/), a Fedora for running containers, and uses Kubernetes for management.
-]
+
 ---
 layout: false
 .left-column[
   ## This is documented online
-  ## Why Docker & CoreOS
-  ## First class considerations
+  ## Why Docker?
+  ## Why CoreOS?
+]
+.right-column[
+## CoreOS
+* Security, consistency & reliability
+* Cluster tools
+  * Fleet
+  * etcd
+
+### Other choice?
+* [Project Atomic](http://www.projectatomic.io/download/) for OS
+
+
+]
+???
+
+...notes
+
+---
+layout: false
+.left-column[
+  ## This is documented online
+  ## Why Docker?
+  ## Why CoreOS?
+  ## Considerations
 ]
 .right-column[
 
@@ -101,8 +137,9 @@ layout: false
 layout: false
 .left-column[
   ## This is documented online
-  ## Why Docker & CoreOS
-  ## First class considerations
+  ## Why Docker?
+  ## Why CoreOS?
+  ## Considerations
   ## Overview
 ]
 .right-column[
@@ -623,12 +660,6 @@ layout: false
 
 * Just start the announcer again
 
----
-name: inverse
-layout: true
-class: center, middle, inverse
----
-# Yo dawg, I heard you like sidekicks...
 ---
 layout:false
 background-image: url(/images/hkam_05.png)
