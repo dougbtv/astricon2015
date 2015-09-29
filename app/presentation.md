@@ -11,7 +11,7 @@ layout: false
 ]
 .right-column[
 
-### I'm Doug and this is a STUB. 
+### I'm Doug Smith
 
 - Hailing from Vermont
 
