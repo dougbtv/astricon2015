@@ -150,7 +150,9 @@ layout: false
 
 * Sample system architecture
 
-* Kamailio etcd dispatcher
+* `kamailio-etcd-dispatcher`
+
+* Continuous Deployment Opportunities
 
 ]
 ---
@@ -601,9 +603,6 @@ background-image: url(/images/platform_stack.png)
 layout:false
 background-image: url(/images/network.png)
 ---
-layout:false
-background-image: url(/images/deploy_scheme.png)
----
 name: inverse
 layout: true
 class: center, middle, inverse
@@ -661,8 +660,23 @@ layout: false
 * Just start the announcer again
 
 ---
+name: inverse
+layout: true
+class: center, middle, inverse
+---
+# Continuous Deployment Opportunities
+---
 layout:false
 background-image: url(/images/hkam_05.png)
+---
+layout:false
+background-image: url(/images/deploy_nominal.png)
+---
+layout:false
+background-image: url(/images/deploy_canary.png)
+---
+layout:false
+background-image: url(/images/deploy_bluegreen.png)
 ---
 name: inverse
 layout: true
