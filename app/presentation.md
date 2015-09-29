@@ -52,7 +52,7 @@ layout: false
   ## This is documented online
 ]
 .right-column[
-  # You can find this online @ [url.stub.com](url.stub.com)
+  # You can find this online @ [astricon.dougbtv.com](astricon.dougbtv.com)
 
   - DIY Workshop on Github
 
@@ -695,4 +695,4 @@ layout: true
 class: center, middle, inverse
 ---
 # Thank you!
-.footnote[Available online @ [stub.dougbtv.com](http://dougbtv.com)]
+.footnote[Available online @ [astricon.dougbtv.com](http://astricon.dougbtv.com)]
