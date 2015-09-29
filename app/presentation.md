@@ -13,13 +13,13 @@ layout: false
 
 ### I'm Doug and this is a STUB. 
 
-- Develop Asterisk solutions every day.
+- Hailing from Vermont
 
 - Member of Burlington, Vermont's hackerspace [LaboratoryB.org](http://laboratoryb.org)
 
-- Dig devops, fullstack JavaScript, and lots of open source
+- Into systems & development
 
-- Live in Vermont, yadda yadda yadda
+- Develop Asterisk solutions every day.
 
 ]
 ---
@@ -28,17 +28,18 @@ layout: false
   ## 800response
 ]
 .right-column[
-  800response is a company, stub.
+
+- CallFinder
 
 - Speech Analytics
 
-- VoIP / Telephony
+- Strong telephony background
 
-- Open source technologies
-
-- This is a stub...
+- We implement lots of FOSS
 
 ]
+???
+
 ---
 name: inverse
 layout: true
@@ -282,7 +283,18 @@ layout: false
   ## Kamailio
 ]
 .right-column[
-  You probably know Kamailio!
+ ## You probably know Kamailio!
+
+  - Used as a load balancer
+
+  - Add a VIP using `keepalived`
+
+  - Use `kamailio-etcd-dispatcher` for service discovery
+
+  - CI/CD opportunities
+
+]
+???
 
   - As we know, Asterisk is a B2BUA not a proxy.
 
@@ -295,8 +307,6 @@ layout: false
 
   - We can make a "canary release" easily by automatically rebalancing our cluster using `kamailio-etcd-dispatcher`
 
-]
-???
 
 At 11:40 you can hear Kyle Marks talk about "Fronting your Asterisk cluster with, Asterisk"
 
@@ -319,13 +329,13 @@ layout: false
   ## Homer
 ]
 .right-column[
-  Homer is a SIP capture server
+ ## Homer is a SIP capture server
 
   - Get some visibility of all the signalling whipping over your network.
 
   - Runs on a (likely familiar) LAMP stack.
 
-  - We won't go deep into configuration, but, it's in github.
+  - More info in the DIY workshop
 
 ]
 ---
@@ -406,9 +416,6 @@ layout: false
 .right-column[
 
 - Your discovery service uses a discovery service, `discovery.etcd.io`
-  - Generate a key, every box uses the same key
-  - The key is set in the `cloud-config`
-  - ...You can use a private discovery service, too.
 
 - This will probably be the hardest part.
 
@@ -428,7 +435,12 @@ Hello world
 ]
 ???
 
-The discovery service.
+# The discovery service.
+
+  - Generate a key, every box uses the same key
+  - The key is set in the `cloud-config`
+  - ...You can use a private discovery service, too.
+
 
 Public discovery service isn't so bad, all it's going to store are a few private IPs.
 
