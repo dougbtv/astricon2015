@@ -220,6 +220,10 @@ layout: false
 
   - Run it where you want: In the closet, in a public/private cloud.
 ]
+???
+
+# Oh no another O/S? 
+Don't worry.
 ---
 layout: false
 .left-column[
