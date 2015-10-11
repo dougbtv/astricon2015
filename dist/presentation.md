@@ -3,7 +3,12 @@ layout: true
 class: center, middle, inverse
 ---
 #Asterisk using Docker and CoreOS
-.footnote[By Douglas K. Smith, 800response]
+# [Including the DIY Workshop @ github](https://github.com/dougbtv/docker-asterisk/tree/master/high-availability)
+# By Douglas K. Smith, [@dougbtv](https://twitter.com/dougbtv)
+.footnote[
+
+Press "p" for "presenter mode" to see my notes
+]
 ---
 layout: false
 .left-column[
