@@ -2,7 +2,8 @@ name: inverse
 layout: true
 class: center, middle, inverse
 ---
-#Asterisk using Docker and CoreOS
+# Scaleable High Availability Asterisk
+# Asterisk using Docker and CoreOS
 .footnote[By Douglas K. Smith, 800response]
 ---
 layout: false
@@ -35,7 +36,7 @@ layout: false
 
 - Strong telephony background
 
-- We implement lots of FOSS
+- We implement lots of OSS
 
 ]
 ???
@@ -71,11 +72,7 @@ layout: false
 ## Docker
 * Component re-use
 * Dependency management
-* Congruency between development & production
-
-### Another choice?
-* [RKT](https://coreos.com/rkt/docs/) ("Rocket") for containers
-
+* Congruency between environments
 
 ]
 ???
@@ -108,10 +105,6 @@ layout: false
   * Fleet
   * etcd
 
-### Other choice?
-* [Project Atomic](http://www.projectatomic.io/download/) for OS
-
-
 ]
 ???
 
@@ -132,6 +125,8 @@ layout: false
 * Scalability
 
 * Visibility
+
+* Manageability 
 
 ]
 ---
@@ -169,13 +164,7 @@ layout: false
 ]
 .right-column[
 
-  *Docker allows you to package an application with all of its dependencies into a standardized unit for software development.*
-
-  - Portability & congruency
-
-  - A great way to manage running processes
-
-  - Rather convenient for developers
+  - Docker provides us portability & congruency, manage processes & dependencies, convenient for developers & admins
 
 ```bash
 FROM fedora:latest
@@ -197,8 +186,14 @@ docker run -it dougbtv/cowsay \
 #             U  ||----w |
 #                ||     ||
 ```
+### Another choice?
+* [RKT](https://coreos.com/rkt/docs/) ("Rocket") for containers
+
 ]
 ???
+
+*Docker allows you to package an application with all of its dependencies into a standardized unit for software development.*
+
 
 Docker is a way to really use LXC (Linux Containers).
 ---
@@ -208,7 +203,7 @@ layout: false
   ## CoreOS
 ]
 .right-column[
-  CoreOS is a light-weight OS to run your containers on.
+## CoreOS is a light-weight OS to run your containers on.
 
   - Just a couple hundred megs.
 
@@ -219,6 +214,10 @@ layout: false
   - Your containers run the Linux flavor that you're used to.
 
   - Run it where you want: In the closet, in a public/private cloud.
+
+  ### Other choice?
+  * [Project Atomic](http://www.projectatomic.io/download/) for OS
+
 ]
 ???
 
