@@ -330,6 +330,13 @@ module.exports = function (grunt) {
         cwd: '<%= config.app %>/images/',
         dest: '<%= config.dist %>/images/',
         src: '{,*/}*.png'
+      },
+      fonts: {
+        expand: true,
+        dot: true,
+        cwd: '<%= config.app %>/fonts/',
+        dest: '<%= config.dist %>/fonts/',
+        src: '{,*/}*.*'
       }
 
     },
@@ -404,7 +411,8 @@ module.exports = function (grunt) {
     'filerev',
     'usemin',
     'htmlmin',
-    'copy:plainimages'
+    'copy:plainimages',
+    'copy:fonts'
   ]);
 
   grunt.registerTask('default', [
