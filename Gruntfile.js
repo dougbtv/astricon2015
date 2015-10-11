@@ -348,7 +348,6 @@ module.exports = function (grunt) {
         'babel',
         'copy:styles',
         'copy:markdown',
-        'copy:plainimages',
         'imagemin',
         'svgmin'
       ]
@@ -404,7 +403,8 @@ module.exports = function (grunt) {
     'copy:dist',
     'filerev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
+    'copy:plainimages'
   ]);
 
   grunt.registerTask('default', [
