@@ -316,7 +316,22 @@ module.exports = function (grunt) {
         cwd: '<%= config.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      },
+      markdown: {
+        expand: true,
+        dot: true,
+        cwd: '<%= config.app %>/',
+        dest: '<%= config.dist %>/',
+        src: '{,*/}*.md'
+      },
+      plainimages: {
+        expand: true,
+        dot: true,
+        cwd: '<%= config.app %>/images/',
+        dest: '<%= config.dist %>/images/',
+        src: '{,*/}*.png'
       }
+
     },
 
     // Run some tasks in parallel to speed up build process
@@ -332,6 +347,8 @@ module.exports = function (grunt) {
       dist: [
         'babel',
         'copy:styles',
+        'copy:markdown',
+        'copy:plainimages',
         'imagemin',
         'svgmin'
       ]
