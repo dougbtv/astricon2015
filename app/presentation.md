@@ -6,14 +6,11 @@ class: center, middle, inverse
 # using Docker and CoreOS
 .footnote[By Douglas K. Smith, 800response]
 ---
-layout: false
-.left-column[
-  ## Who am I?
-]
-.right-column[
+# I'm Doug Smith
 
-### I'm Doug Smith
+![Fall in VT](/images/fall.png)
 
+???
 - Hailing from Vermont
 
 - Member of Burlington, Vermont's hackerspace [LaboratoryB.org](http://laboratoryb.org)
@@ -21,8 +18,6 @@ layout: false
 - Into systems & development
 
 - Develop Asterisk solutions every day.
-
-]
 ---
 layout: false
 .left-column[
@@ -30,9 +25,7 @@ layout: false
 ]
 .right-column[
 
-- CallFinder
-
-- Speech Analytics
+- CallFinder for Speech Analytics
 
 - Strong telephony background
 
@@ -66,78 +59,6 @@ layout: false
 layout: false
 .left-column[
   ## This is documented online
-  ## Why Docker?
-]
-.right-column[
-## Docker
-* Component re-use
-* Dependency management
-* Congruency between environments
-
-]
-???
-
-  Docker & CoreOS are great because they give a few advantages that keep us clean, give us consistent environments, and tools that help with scale. 
-
-  * Docker is great for component re-use, sharing & team development, rapid deployment, and simplified maintenance by reducing the risk of problems with application dependencies.
-
-  * CoreOS is a *very light* Linux that allows us to run our containers, and comes chock full of simple tools to help us maintain a cluster of machines, using tools like `etcd` and `fleet` 
-
-  * ...You might not have to buy a hypervisor anymore. (But you can still use one.)
-
-  * They're not the only options.
-
-  * For containers: [RKT](https://coreos.com/rkt/docs/) (said, "rocket")
-
-  * For OS: [Project Atomic](http://www.projectatomic.io/download/), a Fedora for running containers, and uses Kubernetes for management.
-
----
-layout: false
-.left-column[
-  ## This is documented online
-  ## Why Docker?
-  ## Why CoreOS?
-]
-.right-column[
-## CoreOS
-* Security, consistency & reliability
-* Cluster tools
-  * Fleet
-  * etcd
-
-]
-???
-
-...notes
-
----
-layout: false
-.left-column[
-  ## This is documented online
-  ## Why Docker?
-  ## Why CoreOS?
-  ## Considerations
-]
-.right-column[
-
-## * High Availability
-
-  * No calls drop on fail-over, or number of calls dropped is mitigated
-
-## * Scalability
-
-## * Visibility
-
-## * Manageability 
-
-]
----
-layout: false
-.left-column[
-  ## This is documented online
-  ## Why Docker?
-  ## Why CoreOS?
-  ## Considerations
   ## Overview
 ]
 .right-column[
@@ -151,6 +72,26 @@ layout: false
 * `kamailio-etcd-dispatcher`
 
 * Continuous Deployment Opportunities
+
+]
+---
+layout: false
+.left-column[
+  ## This is documented online
+  ## Overview
+  ## Considerations
+]
+.right-column[
+
+## * High Availability
+
+  * No calls drop on fail-over, or number of calls dropped is mitigated
+
+## * Scalability
+
+## * Visibility
+
+## * Manageability 
 
 ]
 ---
@@ -227,6 +168,19 @@ Don't worry.
 
   - Fork of ChromeOS
 
+ocker & CoreOS are great because they give a few advantages that keep us clean, give us consistent environments, and tools that help with scale. 
+
+  * Docker is great for component re-use, sharing & team development, rapid deployment, and simplified maintenance by reducing the risk of problems with application dependencies.
+
+  * CoreOS is a *very light* Linux that allows us to run our containers, and comes chock full of simple tools to help us maintain a cluster of machines, using tools like `etcd` and `fleet` 
+
+  * ...You might not have to buy a hypervisor anymore. (But you can still use one.)
+
+  * They're not the only options.
+
+  * For containers: [RKT](https://coreos.com/rkt/docs/) (said, "rocket")
+
+  * For OS: [Project Atomic](http://www.projectatomic.io/download/), a Fedora for running containers, and uses Kubernetes for management.
 
 ---
 layout: false
@@ -423,9 +377,9 @@ layout: false
 ]
 .right-column[
 
-- Your discovery service uses a discovery service, `discovery.etcd.io`
-
 - This will probably be the hardest part.
+
+- Your discovery service uses a discovery service, `discovery.etcd.io`
 
 - If you use ASTDB, you already know how to use a key-value store.
 
@@ -696,9 +650,6 @@ class: center, middle, inverse
 # Continuous Deployment Opportunities
 ---
 layout:false
-background-image: url(/images/hkam_05.png)
----
-layout:false
 background-image: url(/images/deploy_nominal.png)
 ---
 layout:false
@@ -712,4 +663,4 @@ layout: true
 class: center, middle, inverse
 ---
 # Thank you!
-.footnote[Available online @ [astricon.dougbtv.com](http://astricon.dougbtv.com)]
+## Available online @ [astricon.dougbtv.com](http://astricon.dougbtv.com)
