@@ -3,7 +3,7 @@ layout: true
 class: center, middle, inverse
 ---
 # Scaleable High Availability Asterisk
-# Asterisk using Docker and CoreOS
+# using Docker and CoreOS
 .footnote[By Douglas K. Smith, 800response]
 ---
 layout: false
@@ -120,13 +120,15 @@ layout: false
 ]
 .right-column[
 
-* High Availability
+## * High Availability
 
-* Scalability
+  * No calls drop on fail-over, or number of calls dropped is mitigated
 
-* Visibility
+## * Scalability
 
-* Manageability 
+## * Visibility
+
+## * Manageability 
 
 ]
 ---
@@ -205,10 +207,6 @@ layout: false
 .right-column[
 ## CoreOS is a light-weight OS to run your containers on.
 
-  - Just a couple hundred megs.
-
-  - Fork of ChromeOS
-
   - Bootstrapped with simple tools to manage and maintain a cluster.
 
   - Your containers run the Linux flavor that you're used to.
@@ -223,6 +221,13 @@ layout: false
 
 # Oh no another O/S? 
 Don't worry.
+
+## About coreos
+  - Just a couple hundred megs.
+
+  - Fork of ChromeOS
+
+
 ---
 layout: false
 .left-column[
@@ -602,6 +607,11 @@ layout: false
 
 * We connect to a managed gateway / ITSP, conviently on the same subnet.
 
+* From a tandem switching perspective
+
+* Not focused on direct extensions
+
+
 ## In reality...
 
 * You'll probably have layers of this topology
@@ -673,6 +683,10 @@ layout: false
 ## Putting 'em back in rotation
 
 * Just start the announcer again
+
+## What if Kamailio dies?
+
+* We make keepalived dependant on Kamailio, so it dies in concert with it -- causing a fail over.
 
 ---
 name: inverse
