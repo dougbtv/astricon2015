@@ -2,7 +2,8 @@ name: inverse
 layout: true
 class: center, middle, inverse
 ---
-#Asterisk using Docker and CoreOS
+# Scaleable High Availability Asterisk
+# using Docker and CoreOS
 # [Including the DIY Workshop @ github](https://github.com/dougbtv/docker-asterisk/tree/master/high-availability)
 # By Douglas K. Smith, [@dougbtv](https://twitter.com/dougbtv)
 .footnote[
@@ -10,14 +11,11 @@ class: center, middle, inverse
 Press "p" for "presenter mode" to see my notes
 ]
 ---
-layout: false
-.left-column[
-  ## Who am I?
-]
-.right-column[
+# I'm Doug Smith
 
-### I'm Doug Smith
+![Fall in VT](/images/fall.png)
 
+???
 - Hailing from Vermont
 
 - Member of Burlington, Vermont's hackerspace [LaboratoryB.org](http://laboratoryb.org)
@@ -25,8 +23,6 @@ layout: false
 - Into systems & development
 
 - Develop Asterisk solutions every day.
-
-]
 ---
 layout: false
 .left-column[
@@ -34,13 +30,11 @@ layout: false
 ]
 .right-column[
 
-- CallFinder
-
-- Speech Analytics
+- CallFinder for Speech Analytics
 
 - Strong telephony background
 
-- We implement lots of FOSS
+- We implement lots of OSS
 
 ]
 ???
@@ -70,82 +64,6 @@ layout: false
 layout: false
 .left-column[
   ## This is documented online
-  ## Why Docker?
-]
-.right-column[
-## Docker
-* Component re-use
-* Dependency management
-* Congruency between development & production
-
-### Another choice?
-* [RKT](https://coreos.com/rkt/docs/) ("Rocket") for containers
-
-
-]
-???
-
-  Docker & CoreOS are great because they give a few advantages that keep us clean, give us consistent environments, and tools that help with scale. 
-
-  * Docker is great for component re-use, sharing & team development, rapid deployment, and simplified maintenance by reducing the risk of problems with application dependencies.
-
-  * CoreOS is a *very light* Linux that allows us to run our containers, and comes chock full of simple tools to help us maintain a cluster of machines, using tools like `etcd` and `fleet` 
-
-  * ...You might not have to buy a hypervisor anymore. (But you can still use one.)
-
-  * They're not the only options.
-
-  * For containers: [RKT](https://coreos.com/rkt/docs/) (said, "rocket")
-
-  * For OS: [Project Atomic](http://www.projectatomic.io/download/), a Fedora for running containers, and uses Kubernetes for management.
-
----
-layout: false
-.left-column[
-  ## This is documented online
-  ## Why Docker?
-  ## Why CoreOS?
-]
-.right-column[
-## CoreOS
-* Security, consistency & reliability
-* Cluster tools
-  * Fleet
-  * etcd
-
-### Other choice?
-* [Project Atomic](http://www.projectatomic.io/download/) for OS
-
-
-]
-???
-
-...notes
-
----
-layout: false
-.left-column[
-  ## This is documented online
-  ## Why Docker?
-  ## Why CoreOS?
-  ## Considerations
-]
-.right-column[
-
-* High Availability
-
-* Scalability
-
-* Visibility
-
-]
----
-layout: false
-.left-column[
-  ## This is documented online
-  ## Why Docker?
-  ## Why CoreOS?
-  ## Considerations
   ## Overview
 ]
 .right-column[
@@ -162,6 +80,26 @@ layout: false
 
 ]
 ---
+layout: false
+.left-column[
+  ## This is documented online
+  ## Overview
+  ## Considerations
+]
+.right-column[
+
+## * High Availability
+
+  * No calls drop on fail-over, or number of calls dropped is mitigated
+
+## * Scalability
+
+## * Visibility
+
+## * Manageability 
+
+]
+---
 name: inverse
 layout: true
 class: center, middle, inverse
@@ -174,13 +112,7 @@ layout: false
 ]
 .right-column[
 
-  *Docker allows you to package an application with all of its dependencies into a standardized unit for software development.*
-
-  - Portability & congruency
-
-  - A great way to manage running processes
-
-  - Rather convenient for developers
+  - Docker provides us portability & congruency, manage processes & dependencies, convenient for developers & admins
 
 ```bash
 FROM fedora:latest
@@ -202,8 +134,14 @@ docker run -it dougbtv/cowsay \
 #             U  ||----w |
 #                ||     ||
 ```
+### Another choice?
+* [RKT](https://coreos.com/rkt/docs/) ("Rocket") for containers
+
 ]
 ???
+
+*Docker allows you to package an application with all of its dependencies into a standardized unit for software development.*
+
 
 Docker is a way to really use LXC (Linux Containers).
 ---
@@ -213,22 +151,42 @@ layout: false
   ## CoreOS
 ]
 .right-column[
-  CoreOS is a light-weight OS to run your containers on.
-
-  - Just a couple hundred megs.
-
-  - Fork of ChromeOS
+## CoreOS is a light-weight OS to run your containers on.
 
   - Bootstrapped with simple tools to manage and maintain a cluster.
 
   - Your containers run the Linux flavor that you're used to.
 
   - Run it where you want: In the closet, in a public/private cloud.
+
+  ### Other choice?
+  * [Project Atomic](http://www.projectatomic.io/download/) for OS
+
 ]
 ???
 
 # Oh no another O/S? 
 Don't worry.
+
+## About coreos
+  - Just a couple hundred megs.
+
+  - Fork of ChromeOS
+
+ocker & CoreOS are great because they give a few advantages that keep us clean, give us consistent environments, and tools that help with scale. 
+
+  * Docker is great for component re-use, sharing & team development, rapid deployment, and simplified maintenance by reducing the risk of problems with application dependencies.
+
+  * CoreOS is a *very light* Linux that allows us to run our containers, and comes chock full of simple tools to help us maintain a cluster of machines, using tools like `etcd` and `fleet` 
+
+  * ...You might not have to buy a hypervisor anymore. (But you can still use one.)
+
+  * They're not the only options.
+
+  * For containers: [RKT](https://coreos.com/rkt/docs/) (said, "rocket")
+
+  * For OS: [Project Atomic](http://www.projectatomic.io/download/), a Fedora for running containers, and uses Kubernetes for management.
+
 ---
 layout: false
 .left-column[
@@ -424,9 +382,9 @@ layout: false
 ]
 .right-column[
 
-- Your discovery service uses a discovery service, `discovery.etcd.io`
-
 - This will probably be the hardest part.
+
+- Your discovery service uses a discovery service, `discovery.etcd.io`
 
 - If you use ASTDB, you already know how to use a key-value store.
 
@@ -608,6 +566,11 @@ layout: false
 
 * We connect to a managed gateway / ITSP, conviently on the same subnet.
 
+* From a tandem switching perspective
+
+* Not focused on direct extensions
+
+
 ## In reality...
 
 * You'll probably have layers of this topology
@@ -680,15 +643,16 @@ layout: false
 
 * Just start the announcer again
 
+## What if Kamailio dies?
+
+* We make keepalived dependant on Kamailio, so it dies in concert with it -- causing a fail over.
+
 ---
 name: inverse
 layout: true
 class: center, middle, inverse
 ---
 # Continuous Deployment Opportunities
----
-layout:false
-background-image: url(/images/hkam_05.png)
 ---
 layout:false
 background-image: url(/images/deploy_nominal.png)
@@ -704,4 +668,4 @@ layout: true
 class: center, middle, inverse
 ---
 # Thank you!
-.footnote[Available online @ [astricon.dougbtv.com](http://astricon.dougbtv.com)]
+## Available online @ [astricon.dougbtv.com](http://astricon.dougbtv.com)
